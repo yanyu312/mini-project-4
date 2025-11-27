@@ -68,7 +68,7 @@ jobs:
               if diff test_input_simple.txt test_output-simple.txt > /dev/null; then
                 echo "一樣"
               else
-                echo 不一樣"
+                echo "不一樣"
                 exit 1
               fi
 
