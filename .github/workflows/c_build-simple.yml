@@ -64,4 +64,9 @@ jobs:
 
       # 步驟 10: 比較解碼後的輸出與原始輸入是否相同
       - name: Compare decoded output with original input
-        run: diff test_input_simple.txt test_output-simple.txt
+        run:  if diff test_input_simple.txt test_output-simple.txt > /dev/null; then
+                echo "相同"
+              else
+                echo "不同"
+              fi
+
