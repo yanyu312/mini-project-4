@@ -1,0 +1,79 @@
+name: C 語言編碼與解碼流程
+
+on: [push]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 步驟 1: 取得repo 程式碼
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 步驟 2: 編譯 encoder
+      - name: Compile encoder
+        run: gcc encoder.c logger.c -lm -g -o encoder
+
+      # 步驟 3: 上傳 encoder
+      - name: Upload encoder binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: encoder
+          path: encoder
+
+      # 步驟 4: 編譯 decoder
+      - name: Compile decoder
+        run: gcc decoder.c logger.c -lm -g -o decoder
+
+      # 步驟 5: 上傳 decoder
+      - name: Upload decoder binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: decoder
+          path: decoder
+
+      # 步驟 6: 用 curl 指令抓取文字輸入 (cano.txt)
+      - name: Download test input (cano.txt)
+        run: |
+          curl -L -o test_input_complex.txt https://sherlock-holm.es/stories/plain-text/cano.txt
+
+      # 步驟 7: 使用 encoder 處理輸入資料
+      - name: Run encoder
+        run: |
+          ./encoder test_input_complex.txt test_codebook-complex.csv test_encoded-complex.bin > test_encoder-complex.log 2>&1
+
+      # 步驟 8: 上傳 encoder 輸出
+      - name: Upload encoder outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: encoder-outputs-complex
+          path: |
+            test_encoded-complex.bin
+            test_codebook-complex.csv
+            test_encoder-complex.log
+
+      # 步驟 9: 使用建置好的 decoder 處理 ecoder 的輸出
+      - name: Run decoder
+        run: |
+          ./decoder test_output-complex.txt test_codebook-complex.csv test_encoded-complex.bin > test_decoder-complex.log 2>&1
+
+      # 步驟 10: 上傳 decoder 輸出
+      - name: Upload decoder outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: decoder-outputs-complex
+          path: |
+            test_output-complex.txt
+            test_decoder-complex.log
+
+      # 步驟 11: 使用diff比較 input 及 output
+      - name: Compare input and output
+        run: |
+            if diff -q test_input_complex.txt test_output-complex.txt; then
+            echo "IDENTICAL"
+            else
+            echo "DIFFERENT"
+            exit 1
+            fi
+
