@@ -35,7 +35,8 @@ jobs:
 
       # 步驟 6: 執行 encoder 處理輸入資料
       - name: Run encoder
-        run: ./encoder test_input-simple.txt
+        run: ./encoder test_input-simple.txt test_codebook-simple.csv encoder.log test_encoded-simple.bin
+
 
       # 步驟 7: 上傳 encoder 輸出結果
       - name: Upload encoder outputs
@@ -49,7 +50,8 @@ jobs:
 
       # 步驟 8: 執行 decoder 處理編碼資料
       - name: Run decoder
-        run: ./decoder test_encoded-simple.bin test_codebook-simple.csv
+        run: ./decoder test_output-simple.txt test_codebook-simple.csv test_encoded-simple.bin
+
 
       # 步驟 9: 上傳 decoder 輸出結果
       - name: Upload decoder outputs
