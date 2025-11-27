@@ -1,31 +1,61 @@
-name: C 語言建置流程
+name: C 語言編碼與解碼流程
 
-# 觸發條件：當 push 程式碼到任何分支時
 on: [push]
 
 jobs:
-  build:
-    # 執行環境：使用預裝了 GCC 的最新 Ubuntu 虛擬機
+  build-and-test:
     runs-on: ubuntu-latest
-    
+
     steps:
-      # 步驟 1: 取得 repo 中的程式碼
+      # 步驟 1: 取得 repo 程式碼
       - name: Checkout code
-        uses: actions/checkout@v4 
-        
-      # 步驟 2: 編譯 C 語言程式
-      # 使用 GCC 編譯 main.c，輸出名為 hello_c_app 的可執行檔
-      - name: Compile C program (GCC)
-        run: gcc main.c -o hello_c_app
-        
-      # 步驟 3: 運行並驗證程式（直接執行程式）
-      - name: Run compiled application
-        run: ./hello_c_app
-        
-      # 步驟 4: 上傳建置成品（可選）
-      # 將編譯好的可執行檔儲存為 Artifact，供下載
-      - name: Upload build artifact
+        uses: actions/checkout@v4
+
+      # 步驟 2: 編譯 encoder.c
+      - name: Compile encoder
+        run: gcc -o encoder encoder.c
+
+      # 步驟 3: 上傳 encoder
+      - name: Upload encoder binary
         uses: actions/upload-artifact@v4
         with:
-          name: hello-c-executable
-          path: hello_c_app
+          name: encoder
+          path: encoder
+
+      # 步驟 4: 編譯 decoder.c
+      - name: Compile decoder
+        run: gcc -o decoder decoder.c
+
+      # 步驟 5: 上傳 decoder
+      - name: Upload decoder binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: decoder
+          path: decoder
+
+      # 步驟 6: 執行 encoder 處理輸入資料
+      - name: Run encoder
+        run: ./encoder test_input-simple.txt
+
+      # 步驟 7: 上傳 encoder 輸出結果
+      - name: Upload encoder outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: encoder-outputs
+          path: |
+            test_encoded-simple.bin
+            test_codebook-simple.csv
+            encoder.log
+
+      # 步驟 8: 執行 decoder 處理編碼資料
+      - name: Run decoder
+        run: ./decoder test_encoded-simple.bin test_codebook-simple.csv
+
+      # 步驟 9: 上傳 decoder 輸出結果
+      - name: Upload decoder outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: decoder-outputs
+          path: |
+            test_output-simple.txt
+            decoder.log
