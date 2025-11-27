@@ -45,7 +45,7 @@ jobs:
           path: |
             test_encoded-simple.bin
             test_codebook-simple.csv
-            encoder.log
+            test_encoder-simple.log
 
       # 步驟 8: 執行 decoder 處理編碼資料
       - name: Run decoder
