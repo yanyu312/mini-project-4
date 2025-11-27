@@ -11,9 +11,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 步驟 2: 編譯 encoder.c（加入 logger.c）
+      # 步驟 2: 編譯 encoder.c（加入 logger.c 和 math 函式庫）
       - name: Compile encoder
-        run: gcc encoder.c logger.c -o encoder
+        run: gcc encoder.c logger.c -lm -g -o encoder
 
       # 步驟 3: 上傳 encoder
       - name: Upload encoder binary
@@ -22,9 +22,9 @@ jobs:
           name: encoder
           path: encoder
 
-      # 步驟 4: 編譯 decoder.c（加入 logger.c）
+      # 步驟 4: 編譯 decoder.c（加入 logger.c 和 math 函式庫）
       - name: Compile decoder
-        run: gcc decoder.c logger.c -o decoder
+        run: gcc decoder.c logger.c -lm -g -o decoder
 
       # 步驟 5: 上傳 decoder
       - name: Upload decoder binary
