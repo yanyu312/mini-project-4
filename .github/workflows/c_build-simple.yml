@@ -11,9 +11,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 步驟 2: 編譯 encoder.c
+      # 步驟 2: 編譯 encoder.c（加入 logger.c）
       - name: Compile encoder
-        run: gcc -o encoder encoder.c
+        run: gcc encoder.c logger.c -o encoder
 
       # 步驟 3: 上傳 encoder
       - name: Upload encoder binary
@@ -22,9 +22,9 @@ jobs:
           name: encoder
           path: encoder
 
-      # 步驟 4: 編譯 decoder.c
+      # 步驟 4: 編譯 decoder.c（加入 logger.c）
       - name: Compile decoder
-        run: gcc -o decoder decoder.c
+        run: gcc decoder.c logger.c -o decoder
 
       # 步驟 5: 上傳 decoder
       - name: Upload decoder binary
@@ -45,7 +45,7 @@ jobs:
           path: |
             test_encoded-simple.bin
             test_codebook-simple.csv
-            test_encoder-simple.log
+            encoder.log
 
       # 步驟 8: 執行 decoder 處理編碼資料
       - name: Run decoder
