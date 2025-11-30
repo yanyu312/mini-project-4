@@ -19,7 +19,7 @@ static void timestamp_now(char buf[20]) {
     if (tmp) lt = *tmp;
 #endif
 
-    trftime(buf, 20, "%Y-%m-%d %H:%M:%S", &lt);
+    strftime(buf, 20, "%Y-%m-%d %H:%M:%S", &lt);
 }
 
 static void vlog_emit(const char *level, const char *component,
