@@ -14,8 +14,11 @@ Huffman Encoder / Decoder with Logging & CI
 
 ## 成員與分工
 | 學號 | 姓名 | 分工內容 | 比例 |
+
 | 411186038 | 陳彥妤 | Encoder/Decoder、VS Code 任務、CI | 34％ |
+
 | 411286036 | 李後諺 | 撰寫以及push與simple相關的所有檔案 | 33％ |
+
 | 411286016 | 楊昇儒 | 撰寫以及push與complex相關的所有檔案 | 33％ |
 
 ---
