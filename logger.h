@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdarg.h>
-
+#include <time.h>
 void log_info (const char *component, const char *fmt, ...);
 void log_warn (const char *component, const char *fmt, ...);
 void log_error(const char *component, const char *fmt, ...);
