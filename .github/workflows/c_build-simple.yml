@@ -50,7 +50,7 @@ jobs:
 
       # 步驟 8: 執行 decoder 處理編碼資料
       - name: Run decoder
-        run: ./decoder test_output-simple.txt test_codebook-simple.csv test_encoded-simple.bin
+        run: ./decoder test_output-simple.txt test_codebook-simple.csv test_encoded-simple.bin > test_decoder-simple.log 2>&1
 
 
       # 步驟 9: 上傳 decoder 輸出結果
@@ -60,7 +60,7 @@ jobs:
           name: decoder-outputs
           path: |
             test_output-simple.txt
-            decoder.log
+            test_decoder-simple.log
 
       # 步驟 10: 比較解碼後的輸出與原始輸入是否相同
       - name: Compare decoded output with original input
