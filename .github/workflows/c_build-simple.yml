@@ -35,7 +35,7 @@ jobs:
 
       # 步驟 6: 執行 encoder 處理輸入資料
       - name: Run encoder
-        run: ./encoder test_input_simple.txt test_codebook-simple.csv test_encoder-simple.log test_encoded-simple.bin
+        run: ./encoder test_input_simple.txt test_codebook-simple.csv test_encoded-simple.bin > test_encoder-simple.log 2>&1
 
 
       # 步驟 7: 上傳 encoder 輸出結果
@@ -46,7 +46,7 @@ jobs:
           path: |
             test_encoded-simple.bin
             test_codebook-simple.csv
-            encoder.log
+            test_encoder-simple.log
 
       # 步驟 8: 執行 decoder 處理編碼資料
       - name: Run decoder
